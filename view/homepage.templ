@@ -1,0 +1,83 @@
+package view
+
+import "alvintanoto/palworld-ds-monitor/internal/dto"
+
+templ Homepage(data *dto.HomepageDTO) {
+	<html>
+		<header>
+			<link href="/assets/css.css" rel="stylesheet"/>
+			<script src="https://unpkg.com/htmx.org@1.9.10" integrity="sha384-D1Kt99CQMDuVetoL1lrYwg5t+9QdHe7NLX/SoJYkXDFfX37iInKRy5xLSi8nO7UC" crossorigin="anonymous"></script>
+			<title>Palworld Dedicated Server </title>
+		</header>
+		<body class="text-base bg-grey">
+			<div id="#alertSuccess" class="max-w-[1280px] mx-auto my-2 z-30 "></div>
+			<div>
+				<div class="text-3xl font-light py-4 text-center z-0">Palworld Dedicated Server Monitor </div>
+				<div class=" max-w-[1280px] mx-auto flex-row flex flex-wrap justify-center">
+					<div class="p-2 min-w-[640px]">
+						<div>
+							<div>Server version: { data.ServerVersion }</div>
+							<div>Server name: { data.ServerName } </div>
+						</div>
+						<div class="min-w-max pt-3">
+							<div class="text-2xl text-semibold py-2">Server Management</div>
+							<div class="min-w-max">
+								<div class="text-xl py-1">Broadcast</div>
+								<input type="text" name="message" placeholder="Broadcast Message..." class="px-2 py-1"/><button class="bg-warning rounded-md px-2 py-1 ml-1">Send</button>
+							</div>
+							<div>
+								<div class="text-xl py-1">Shut Down</div>
+								<input type="text" name="message" placeholder="Shutting down server in 60 seconds" class="px-2 py-1"/>
+								<input type="number" name="time" placeholder="60" class="px-2 py-1 w-[48px]"/>
+								<button class="bg-warning rounded-md px-2 py-1 ml-1">Shut Down</button>
+							</div>
+							<div>
+								<div class="text-xl py-1">Auto Shut Down</div>
+								<div class="text-base bg-primary/10 px-2 py-1 mb-1 rounded-md text-primary">
+									This action will shut down the server if no online player during specified duration. 
+									<br/>
+									Default 0 (not active) 
+								</div>
+								<button class="bg-primary rounded-md px-2 py-1 text-white">Save Job</button>
+							</div>
+							<div>
+								<div class="text-xl py-1">Force Shut Down</div>
+								<div class="text-base bg-danger/10 px-2 py-1 mb-1 rounded-md text-danger">This action will shut down the server immediately! </div>
+								<button class="bg-danger rounded-md px-2 py-1 text-white">Force Shut Down</button>
+							</div>
+						</div>
+					</div>
+					<div class="p-2 min-w-[640px]">
+						<div class="text-2xl text-semibold">Player Management</div>
+						<div>
+							<div class="text-xl py-1">Online Players </div>
+							<table class="w-full ">
+								<thead class="text-base font-semibold border-b">
+									<td>Name </td>
+									<td>Player UID </td>
+									<td>SteamID </td>
+									<td>Action</td>
+								</thead>
+								if len(data.OnlinePlayers) > 0 {
+									for _, player := range data.OnlinePlayers {
+										<tr>
+											<td>{ player.Name } </td>
+											<td>{ player.PlayerUID } </td>
+											<td>{ player.SteamID } </td>
+										</tr>
+									}
+								} else {
+									<td colspan="4" class="p-2 text-base text-center">No player in server </td>
+								}
+							</table>
+						</div>
+						<div>
+							<div class="text-xl py-1">Ban List</div>
+							[WIP]
+						</div>
+					</div>
+				</div>
+			</div>
+		</body>
+	</html>
+}
