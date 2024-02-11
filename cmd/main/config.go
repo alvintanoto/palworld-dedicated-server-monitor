@@ -9,13 +9,11 @@ import (
 type Configurations struct {
 	AppPort int
 
+	AutoShutDownDuration int
+
 	RconUrl      string
 	RconPassword string
 }
-
-// PORT=3000
-// RCON_URL=rcon://192.168.1.148:25575
-// RCON_PASSWORD=password
 
 func (c *Configurations) ReadConfig() error {
 
@@ -35,5 +33,6 @@ func (c *Configurations) ReadConfig() error {
 	RconPassword := os.Getenv("RCON_PASSWORD")
 	c.RconPassword = RconPassword
 
+	c.AutoShutDownDuration = 0
 	return nil
 }

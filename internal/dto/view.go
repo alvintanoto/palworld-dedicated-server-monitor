@@ -7,7 +7,9 @@ type PlayerDTO struct {
 }
 
 type HomepageDTO struct {
-	ServerVersion string
-	ServerName    string
-	OnlinePlayers []PlayerDTO
+	Error                        string
+	ServerVersion                string
+	ServerName                   string
+	NoPlayerAutoShutdownDuration int
+	OnlinePlayers                []PlayerDTO
 }

@@ -1,6 +1,7 @@
 package view
 
 import "alvintanoto/palworld-ds-monitor/internal/dto"
+import "strconv"
 
 templ BroadcastInput () {
 	<input
@@ -16,6 +17,7 @@ templ Homepage(data *dto.HomepageDTO) {
 	<html>
 		<header>
 			<link href="/assets/css.css" rel="stylesheet"/>
+			<link rel="shortcut icon" type="image/x-icon" href="assets/favicon.ico"/>
 			<script src="https://unpkg.com/htmx.org@1.9.10" integrity="sha384-D1Kt99CQMDuVetoL1lrYwg5t+9QdHe7NLX/SoJYkXDFfX37iInKRy5xLSi8nO7UC" crossorigin="anonymous"></script>
 			<title>Palworld Dedicated Server </title>
 		</header>
@@ -55,18 +57,24 @@ templ Homepage(data *dto.HomepageDTO) {
 								>
 									<div class="text-xl py-1">Shut Down Server</div>
 									<input type="text" name="message" placeholder="Shutting down server in 60 seconds" class="px-2 py-1"/>
-									<input type="number" name="duration" placeholder="60" class="px-2 py-1 w-[48px]"/>
+									<input type="number" name="duration" placeholder="60" class="px-2 py-1 w-[72px]"/>
 									<button class="bg-warning rounded-md px-2 py-1 ml-1">Shut Down</button>
 								</form>
 							</div>
 							<div class="">
-								<div class="text-xl py-1">Auto Shut Down Server</div>
-								<div class="text-base bg-primary/10 px-2 py-1 mb-1 rounded-md text-primary max-w-[540px]">
-									This action will shut down the server if no online player during specified duration (in seconds). 
-									Default 0 (not active) 
-								</div>
-								<input type="number" name="time" placeholder="60" class="px-2 py-1 w-[48px]"/>
-								<button class="bg-primary rounded-md px-2 py-1 ml-1 text-white">Save Job</button>
+								<form
+									hx-post="/auto-shut-down"
+									hx-target="#alert"
+									hx-swap="innerHTML"
+								>
+									<div class="text-xl py-1">Auto Shut Down Server</div>
+									<div class="text-base bg-primary/10 px-2 py-1 mb-1 rounded-md text-primary max-w-[540px]">
+										This action will shut down the server if no online player during specified duration (in seconds). 
+										Default 0 (not active) 
+									</div>
+									<input type="number" name="duration" placeholder="60" class="px-2 py-1 w-[48px]" value={ strconv.Itoa(data.NoPlayerAutoShutdownDuration) }/>
+									<button class="bg-primary rounded-md px-2 py-1 ml-1 text-white">Save Job</button>
+								</form>
 							</div>
 							<div>
 								<div class="text-xl py-1">Force Shut Down Server</div>
@@ -97,6 +105,7 @@ templ Homepage(data *dto.HomepageDTO) {
 											<td>{ player.Name } </td>
 											<td>{ player.PlayerUID } </td>
 											<td>{ player.SteamID } </td>
+											<td>[WIP]</td>
 										</tr>
 									}
 								} else {
@@ -111,6 +120,20 @@ templ Homepage(data *dto.HomepageDTO) {
 					</div>
 				</div>
 			</div>
+		</body>
+	</html>
+}
+
+templ HomepageRconConnFail(message string) {
+	<html>
+		<header>
+			<link href="/assets/css.css" rel="stylesheet"/>
+			<link rel="shortcut icon" type="image/x-icon" href="assets/favicon.ico"/>
+			<script src="https://unpkg.com/htmx.org@1.9.10" integrity="sha384-D1Kt99CQMDuVetoL1lrYwg5t+9QdHe7NLX/SoJYkXDFfX37iInKRy5xLSi8nO7UC" crossorigin="anonymous"></script>
+			<title>Palworld Dedicated Server </title>
+		</header>
+		<body class="text-base bg-grey">
+			<div class="p-2">{ message }</div>
 		</body>
 	</html>
 }

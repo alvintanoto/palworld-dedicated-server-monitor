@@ -132,24 +132,33 @@ func (w prWrapper) TeleportToMe(steamID string) (string, error) {
 	return conn.Execute(command)
 }
 
-func (w prWrapper) ShowPlayers() (string, error) {
+func (w prWrapper) ShowPlayers() (resp string, err error) {
 	conn, err := rcon.Dial(w.Address, w.Password)
 	if err != nil {
-		log.Println(err)
+		return "", err
 	}
-	defer conn.Close()
 
-	return conn.Execute(COMMAND_SHOW_PLAYERS)
+	resp, err = conn.Execute(COMMAND_SHOW_PLAYERS)
+	if err != nil {
+		return "", err
+	}
+	conn.Close()
+	return resp, err
 }
 
-func (w prWrapper) Info() (string, error) {
+func (w prWrapper) Info() (resp string, err error) {
 	conn, err := rcon.Dial(w.Address, w.Password)
 	if err != nil {
-		log.Println(err)
+		return "", err
 	}
-	defer conn.Close()
 
-	return conn.Execute(COMMAND_INFO)
+	resp, err = conn.Execute(COMMAND_INFO)
+	if err != nil {
+		return "", err
+	}
+
+	conn.Close()
+	return resp, err
 }
 
 func (w prWrapper) SaveServer() (string, error) {

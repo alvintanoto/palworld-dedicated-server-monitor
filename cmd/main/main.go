@@ -9,11 +9,13 @@ import (
 	"os/signal"
 	"time"
 
+	"github.com/go-co-op/gocron/v2"
 	"github.com/gorilla/mux"
 )
 
 type Application struct {
 	Configurations *Configurations
+	Scheduler      gocron.Scheduler
 
 	Router *mux.Router
 }

@@ -19,7 +19,8 @@ func (app *Application) SetupRoutes() {
 	app.Router = mux.NewRouter()
 	app.Router.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		data := &dto.HomepageDTO{
-			OnlinePlayers: []dto.PlayerDTO{},
+			OnlinePlayers:                []dto.PlayerDTO{},
+			NoPlayerAutoShutdownDuration: app.Configurations.AutoShutDownDuration,
 		}
 
 		palrcon := palrcon.NewPalRcon(app.Configurations.RconUrl, app.Configurations.RconPassword)
@@ -27,6 +28,8 @@ func (app *Application) SetupRoutes() {
 		infoResp, err := palrcon.Info()
 		if err != nil {
 			log.Println(err.Error())
+			view.HomepageRconConnFail("failed to connect to rcon").Render(r.Context(), w)
+			return
 		}
 
 		infoRespShort := strings.ReplaceAll(infoResp, "Welcome to Pal Server", "")
@@ -125,6 +128,21 @@ func (app *Application) SetupRoutes() {
 		}
 
 		view.SuccessToast("Server successfully shut down.").Render(r.Context(), w)
+	})
+
+	app.Router.HandleFunc("/auto-shut-down", func(w http.ResponseWriter, r *http.Request) {
+		durationString := r.PostFormValue("duration")
+		duration, err := strconv.Atoi(durationString)
+		if err != nil {
+			log.Println(err.Error())
+			view.FailedToast("shut down duration must be a number value").Render(r.Context(), w)
+
+			return
+		}
+
+		app.Configurations.AutoShutDownDuration = duration
+		app.NoOnlinePlayersShutDownCron()
+		view.SuccessToast("Successfuly created a job to auto shut down.").Render(r.Context(), w)
 	})
 
 	app.Router.PathPrefix("/assets/").Handler(http.StripPrefix("/assets/", http.FileServer(http.Dir("./view/assets/"))))
