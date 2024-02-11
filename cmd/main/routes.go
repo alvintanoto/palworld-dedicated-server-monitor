@@ -61,6 +61,19 @@ func (app *Application) SetupRoutes() {
 		view.Homepage(data).Render(r.Context(), w)
 	})
 
+	app.Router.HandleFunc("/send-broadcast", func(w http.ResponseWriter, r *http.Request) {
+		message := r.PostFormValue("message")
+		message = strings.TrimSpace(message)
+		if message == "" {
+			return
+		}
+
+		palrcon := palrcon.NewPalRcon(app.Configurations.RconUrl, app.Configurations.RconPassword)
+		palrcon.Broadcast(message)
+
+		view.SuccessToast("Broadcast sent.").Render(r.Context(), w)
+	})
+
 	app.Router.PathPrefix("/assets/").Handler(http.StripPrefix("/assets/", http.FileServer(http.Dir("./view/assets/"))))
 
 }

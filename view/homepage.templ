@@ -2,6 +2,16 @@ package view
 
 import "alvintanoto/palworld-ds-monitor/internal/dto"
 
+templ BroadcastInput () {
+	<input
+		id="inputBroadcast"
+		type="text"
+		name="message"
+		placeholder="Broadcast Message..."
+		class="px-2 py-1"
+	/>
+}
+
 templ Homepage(data *dto.HomepageDTO) {
 	<html>
 		<header>
@@ -10,11 +20,11 @@ templ Homepage(data *dto.HomepageDTO) {
 			<title>Palworld Dedicated Server </title>
 		</header>
 		<body class="text-base bg-grey">
-			<div id="#alertSuccess" class="max-w-[1280px] mx-auto my-2 z-30 "></div>
+			<div id="alertSuccess" class="max-w-[calc(574px+574px)] mx-auto my-2 z-30"></div>
 			<div>
 				<div class="text-3xl font-light py-4 text-center z-0">Palworld Dedicated Server Monitor </div>
-				<div class=" max-w-[1280px] mx-auto flex-row flex flex-wrap justify-center">
-					<div class="p-2 min-w-[640px]">
+				<div class=" max-w-[calc(574px+574px)] mx-auto flex-row flex flex-wrap justify-center">
+					<div class="p-2 min-w-[574px]">
 						<div>
 							<div>Server version: { data.ServerVersion }</div>
 							<div>Server name: { data.ServerName } </div>
@@ -22,32 +32,43 @@ templ Homepage(data *dto.HomepageDTO) {
 						<div class="min-w-max pt-3">
 							<div class="text-2xl text-semibold py-2">Server Management</div>
 							<div class="min-w-max">
-								<div class="text-xl py-1">Broadcast</div>
-								<input type="text" name="message" placeholder="Broadcast Message..." class="px-2 py-1"/><button class="bg-warning rounded-md px-2 py-1 ml-1">Send</button>
+								<form
+									hx-post="/send-broadcast"
+									hx-target="#alertSuccess"
+									hx-swap="innerHTML"
+									hx-on::after-request="this.reset()"
+								>
+									<div class="text-xl py-1">Broadcast</div>
+									@BroadcastInput()
+									<button
+										type="submit"
+										class="bg-warning rounded-md px-2 py-1 ml-1"
+									>Send</button>
+								</form>
 							</div>
 							<div>
-								<div class="text-xl py-1">Shut Down</div>
+								<div class="text-xl py-1">Shut Down Server</div>
 								<input type="text" name="message" placeholder="Shutting down server in 60 seconds" class="px-2 py-1"/>
 								<input type="number" name="time" placeholder="60" class="px-2 py-1 w-[48px]"/>
 								<button class="bg-warning rounded-md px-2 py-1 ml-1">Shut Down</button>
 							</div>
-							<div>
-								<div class="text-xl py-1">Auto Shut Down</div>
-								<div class="text-base bg-primary/10 px-2 py-1 mb-1 rounded-md text-primary">
-									This action will shut down the server if no online player during specified duration. 
-									<br/>
+							<div class="">
+								<div class="text-xl py-1">Auto Shut Down Server</div>
+								<div class="text-base bg-primary/10 px-2 py-1 mb-1 rounded-md text-primary max-w-[540px]">
+									This action will shut down the server if no online player during specified duration (in seconds). 
 									Default 0 (not active) 
 								</div>
-								<button class="bg-primary rounded-md px-2 py-1 text-white">Save Job</button>
+								<input type="number" name="time" placeholder="60" class="px-2 py-1 w-[48px]"/>
+								<button class="bg-primary rounded-md px-2 py-1 ml-1 text-white">Save Job</button>
 							</div>
 							<div>
-								<div class="text-xl py-1">Force Shut Down</div>
-								<div class="text-base bg-danger/10 px-2 py-1 mb-1 rounded-md text-danger">This action will shut down the server immediately! </div>
+								<div class="text-xl py-1">Force Shut Down Server</div>
+								<div class="text-base bg-danger/10 px-2 py-1 mb-1 rounded-md text-danger max-w-[540px]">This action will shut down the server immediately! </div>
 								<button class="bg-danger rounded-md px-2 py-1 text-white">Force Shut Down</button>
 							</div>
 						</div>
 					</div>
-					<div class="p-2 min-w-[640px]">
+					<div class="p-2 min-w-[574px]">
 						<div class="text-2xl text-semibold">Player Management</div>
 						<div>
 							<div class="text-xl py-1">Online Players </div>

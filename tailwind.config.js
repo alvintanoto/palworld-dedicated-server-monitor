@@ -54,7 +54,7 @@ module.exports = {
         }
       },
       animation: {
-        'alert-fade-out': 'fadeout 2s ease-in-out'
+        'alert-fade-out': 'fadeout 3s ease-in-out'
       }
     },
   },
