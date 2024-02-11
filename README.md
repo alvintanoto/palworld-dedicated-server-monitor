@@ -38,7 +38,10 @@ TBD
 
 # Features
 
-TBD
+Send Broadcast
+Shut Down Server (with message / immedietely)
+Auto Shut Down Server (if no player online for determined duration)
+[WIP] Player Management
 
 # Showcase
 
