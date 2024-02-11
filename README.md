@@ -42,7 +42,7 @@ TBD
 
 # Showcase
 
-[<img src="path/to/image.png">](https://github.com/alvintanoto/palworld-dedicated-server-monitor/blob/main/view/assets/ss.png)
+[<img src="https://github.com/alvintanoto/palworld-dedicated-server-monitor/blob/main/view/assets/ss.png">](https://github.com/alvintanoto/palworld-dedicated-server-monitor/blob/main/view/assets/ss.png)
 
 # Demo
 
