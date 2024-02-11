@@ -36,7 +36,7 @@ module.exports = {
       "error-border": '#ffccc7',
       "error-text": "#a8071a",
       "post-hover": "#e7e9ec",
-      "danger": "#ff4d4f"
+      "danger": "#ff4d4f",
     },
     spacing: {
       '1': '8px',

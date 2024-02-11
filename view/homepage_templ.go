@@ -67,7 +67,7 @@ func Homepage(data *dto.HomepageDTO) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</title></header><body class=\"text-base bg-grey\"><div id=\"alertSuccess\" class=\"max-w-[calc(574px+574px)] mx-auto my-2 z-30\"></div><div><div class=\"text-3xl font-light py-4 text-center z-0\">")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</title></header><body class=\"text-base bg-grey\"><div id=\"alert\" class=\"max-w-[calc(574px+574px)] mx-auto my-2 z-30\"></div><div><div class=\"text-3xl font-light py-4 text-center z-0\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -121,7 +121,7 @@ func Homepage(data *dto.HomepageDTO) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div><div class=\"min-w-max\"><form hx-post=\"/send-broadcast\" hx-target=\"#alertSuccess\" hx-swap=\"innerHTML\" hx-on::after-request=\"this.reset()\"><div class=\"text-xl py-1\">")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div><div class=\"min-w-max\"><form hx-post=\"/send-broadcast\" hx-target=\"#alert\" hx-swap=\"innerHTML\" hx-on::after-request=\"this.reset()\"><div class=\"text-xl py-1\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -147,7 +147,7 @@ func Homepage(data *dto.HomepageDTO) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</button></form></div><div><div class=\"text-xl py-1\">")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</button></form></div><div><form hx-post=\"/shut-down\" hx-target=\"#alert\" hx-swap=\"innerHTML\" hx-on::after-request=\"this.reset()\"><div class=\"text-xl py-1\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -156,7 +156,7 @@ func Homepage(data *dto.HomepageDTO) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div><input type=\"text\" name=\"message\" placeholder=\"Shutting down server in 60 seconds\" class=\"px-2 py-1\"> <input type=\"number\" name=\"time\" placeholder=\"60\" class=\"px-2 py-1 w-[48px]\"> <button class=\"bg-warning rounded-md px-2 py-1 ml-1\">")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div><input type=\"text\" name=\"message\" placeholder=\"Shutting down server in 60 seconds\" class=\"px-2 py-1\"> <input type=\"number\" name=\"duration\" placeholder=\"60\" class=\"px-2 py-1 w-[48px]\"> <button class=\"bg-warning rounded-md px-2 py-1 ml-1\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -165,7 +165,7 @@ func Homepage(data *dto.HomepageDTO) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</button></div><div class=\"\"><div class=\"text-xl py-1\">")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</button></form></div><div class=\"\"><div class=\"text-xl py-1\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -219,7 +219,7 @@ func Homepage(data *dto.HomepageDTO) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div><button class=\"bg-danger rounded-md px-2 py-1 text-white\">")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div><button hx-post=\"/force-shut-down\" hx-target=\"#alert\" hx-swap=\"innerHTML\" class=\"bg-danger rounded-md px-2 py-1 text-white\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -295,7 +295,7 @@ func Homepage(data *dto.HomepageDTO) templ.Component {
 				var templ_7745c5c3_Var28 string
 				templ_7745c5c3_Var28, templ_7745c5c3_Err = templ.JoinStringErrs(player.Name)
 				if templ_7745c5c3_Err != nil {
-					return templ.Error{Err: templ_7745c5c3_Err, FileName: `view/homepage.templ`, Line: 84, Col: 28}
+					return templ.Error{Err: templ_7745c5c3_Err, FileName: `view/homepage.templ`, Line: 96, Col: 28}
 				}
 				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var28))
 				if templ_7745c5c3_Err != nil {
@@ -308,7 +308,7 @@ func Homepage(data *dto.HomepageDTO) templ.Component {
 				var templ_7745c5c3_Var29 string
 				templ_7745c5c3_Var29, templ_7745c5c3_Err = templ.JoinStringErrs(player.PlayerUID)
 				if templ_7745c5c3_Err != nil {
-					return templ.Error{Err: templ_7745c5c3_Err, FileName: `view/homepage.templ`, Line: 85, Col: 33}
+					return templ.Error{Err: templ_7745c5c3_Err, FileName: `view/homepage.templ`, Line: 97, Col: 33}
 				}
 				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var29))
 				if templ_7745c5c3_Err != nil {
@@ -321,7 +321,7 @@ func Homepage(data *dto.HomepageDTO) templ.Component {
 				var templ_7745c5c3_Var30 string
 				templ_7745c5c3_Var30, templ_7745c5c3_Err = templ.JoinStringErrs(player.SteamID)
 				if templ_7745c5c3_Err != nil {
-					return templ.Error{Err: templ_7745c5c3_Err, FileName: `view/homepage.templ`, Line: 86, Col: 31}
+					return templ.Error{Err: templ_7745c5c3_Err, FileName: `view/homepage.templ`, Line: 98, Col: 31}
 				}
 				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var30))
 				if templ_7745c5c3_Err != nil {

@@ -8,6 +8,7 @@ import (
 	"log"
 	"net/http"
 	"regexp"
+	"strconv"
 	"strings"
 
 	"github.com/gorilla/mux"
@@ -69,11 +70,62 @@ func (app *Application) SetupRoutes() {
 		}
 
 		palrcon := palrcon.NewPalRcon(app.Configurations.RconUrl, app.Configurations.RconPassword)
-		palrcon.Broadcast(message)
+		_, err := palrcon.Broadcast(message)
+		if err != nil {
+			log.Println(err.Error())
+			view.FailedToast("Failed to send broadcast").Render(r.Context(), w)
+
+			return
+		}
 
 		view.SuccessToast("Broadcast sent.").Render(r.Context(), w)
 	})
 
-	app.Router.PathPrefix("/assets/").Handler(http.StripPrefix("/assets/", http.FileServer(http.Dir("./view/assets/"))))
+	app.Router.HandleFunc("/shut-down", func(w http.ResponseWriter, r *http.Request) {
+		message := r.PostFormValue("message")
+		message = strings.TrimSpace(message)
+		if message == "" {
+			log.Println("shut down server message is required")
+			view.FailedToast("Shut down server message is required.").Render(r.Context(), w)
 
+			return
+		}
+
+		durationString := r.PostFormValue("duration")
+		_, err := strconv.Atoi(durationString)
+		if err != nil {
+			log.Println("shut down duration must be a number value")
+			view.FailedToast("Shut down server duration number bust be a number value.").Render(r.Context(), w)
+
+			return
+		}
+
+		palrcon := palrcon.NewPalRcon(app.Configurations.RconUrl, app.Configurations.RconPassword)
+
+		_, err = palrcon.Shutdown(durationString, message)
+		if err != nil {
+			log.Println(err.Error())
+			view.FailedToast("Failed to shut down server").Render(r.Context(), w)
+
+			return
+		}
+
+		view.SuccessToast("Server successfully shut down.").Render(r.Context(), w)
+	})
+
+	app.Router.HandleFunc("/force-shut-down", func(w http.ResponseWriter, r *http.Request) {
+		palrcon := palrcon.NewPalRcon(app.Configurations.RconUrl, app.Configurations.RconPassword)
+
+		_, err := palrcon.DoExit()
+		if err != nil {
+			log.Println(err.Error())
+			view.FailedToast("Failed to shut down server").Render(r.Context(), w)
+
+			return
+		}
+
+		view.SuccessToast("Server successfully shut down.").Render(r.Context(), w)
+	})
+
+	app.Router.PathPrefix("/assets/").Handler(http.StripPrefix("/assets/", http.FileServer(http.Dir("./view/assets/"))))
 }

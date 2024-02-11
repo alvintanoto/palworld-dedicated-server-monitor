@@ -1,5 +1,11 @@
 package view
 
+templ FailedToast(message string) {
+	<div class="bg-error border max-w-[360px] border-danger rounded-md m-3 absolute top-1 right-1 p-2 animate-alert-fade-out opacity-0">
+		{ message }
+	</div>
+}
+
 templ SuccessToast(message string) {
 	<div class="bg-success-light border max-w-[360px] border-success rounded-md m-3 absolute top-1 right-1 p-2 animate-alert-fade-out opacity-0">
 		{ message }
