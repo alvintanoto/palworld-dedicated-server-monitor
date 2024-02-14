@@ -94,18 +94,18 @@ templ Homepage(data *dto.HomepageDTO) {
 							<div class="text-xl py-1">Online Players </div>
 							<table class="w-full ">
 								<thead class="text-base font-semibold border-b">
-									<td>Name </td>
-									<td>Player UID </td>
-									<td>SteamID </td>
-									<td>Action</td>
+									<td class="p-1">Name </td>
+									<td class="p-1">Player UID </td>
+									<td class="p-1">SteamID </td>
+									<td class="p-1">Action</td>
 								</thead>
 								if len(data.OnlinePlayers) > 0 {
 									for _, player := range data.OnlinePlayers {
 										<tr>
-											<td>{ player.Name } </td>
-											<td>{ player.PlayerUID } </td>
-											<td>{ player.SteamID } </td>
-											<td>[WIP]</td>
+											<td class="p-1">{ player.Name } </td>
+											<td class="p-1">{ player.PlayerUID } </td>
+											<td class="p-1">{ player.SteamID } </td>
+											<td class="p-1">[WIP]</td>
 										</tr>
 									}
 								} else {

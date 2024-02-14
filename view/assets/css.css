@@ -734,6 +734,10 @@ input[type="number"]::-webkit-inner-spin-button,
   background-color: rgb(250 173 20 / var(--tw-bg-opacity));
 }
 
+.p-1 {
+  padding: 8px;
+}
+
 .p-2 {
   padding: 12px;
 }
